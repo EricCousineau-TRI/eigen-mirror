@@ -910,11 +910,13 @@ struct conservative_resize_like_impl
     if ( ( Derived::IsRowMajor && _this.cols() == cols) || // row-major and we change only the number of rows
          (!Derived::IsRowMajor && _this.rows() == rows) )  // column-major and we change only the number of columns
     {
+      std::cout << "not using swap" << std::endl;
       internal::check_rows_cols_for_overflow<Derived::MaxSizeAtCompileTime>::run(rows, cols);
       _this.derived().m_storage.conservativeResize(rows*cols,rows,cols);
     }
     else
     {
+      std::cout << "using swap" << std::endl;
       // The storage order does not allow us to use reallocation.
       typename Derived::PlainObject tmp(rows,cols);
       const Index common_rows = numext::mini(rows, _this.rows());
@@ -971,6 +973,7 @@ struct conservative_resize_like_impl<Derived,OtherDerived,true>
   {
     const Index new_rows = Derived::RowsAtCompileTime==1 ? 1 : size;
     const Index new_cols = Derived::RowsAtCompileTime==1 ? size : 1;
+    std::cout << "not using swap for Vector" << std::endl;
     _this.derived().m_storage.conservativeResize(size,new_rows,new_cols);
   }
 

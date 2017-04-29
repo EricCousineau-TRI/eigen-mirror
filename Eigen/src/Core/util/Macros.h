@@ -992,4 +992,11 @@ namespace Eigen {
 #   define EIGEN_EXCEPTION_SPEC(X) throw(X)
 #endif
 
+#undef EIGEN_INLINE
+#define EIGEN_INLINE
+#undef EIGEN_STRONG_INLINE
+#define EIGEN_STRONG_INLINE
+#undef EIGEN_ALWAYS_INLINE
+#define EIGEN_ALWAYS_INLINE
+
 #endif // EIGEN_MACROS_H
